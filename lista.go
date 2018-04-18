@@ -2,7 +2,10 @@ package main
 
 import (
     "fmt"
-    "sort"
+    "os"
+    "strconv"
+    // "io/ioutil"
+    // "sort"
 )
 
 type Lista struct{
@@ -10,42 +13,35 @@ type Lista struct{
     proximo *Lista
 }
 
-
-func inicializaVazia() *Lista{
-    var l Lista
-    return &l
-}
-
-func insereLista(l *Lista,i Imovel) *Lista{
+func insereLista(l *Lista,i Imovel) *Lista{ //insere um elemenento novo na lista
     var novo Lista
     novo.imovel = i
     novo.proximo = l
     return &novo
 }
 
-func insereListaUltimo(l *Lista, i Imovel) *Lista{
+func insereListaUltimo(l *Lista, i Imovel) *Lista{ //insere um elemento na ultima posição da lista
   var novo *Lista
   var aux *Lista
   novo.imovel = i
   if l == nil {
     return novo
   }
-  for aux = l; aux.proximo != nil; aux = aux.proximo{
+  for aux = l; aux != nil; aux = aux.proximo{
     //do nothing
   }
   aux.proximo = novo
   return l
 }
 
-func removeLista(l *Lista, ident int) *Lista{
+func removeLista(l *Lista, ident int) *Lista{ //remove um elemento da lista
   var aux *Lista
   var aux2 *Lista
-  aux2 = l
   for aux = l; aux != nil; aux = aux.proximo{
     if aux.imovel.identificador == ident {
       //remove
       if aux2 == nil { //caso seja o primeiro elemento da lista
-        return l.proximo;
+        return l.proximo
       }
       if aux.proximo == nil { //caso seja o ultimo elemento da lista
         aux2.proximo = nil
@@ -59,14 +55,19 @@ func removeLista(l *Lista, ident int) *Lista{
   return l
 }
 
-func imprimeLista(l *Lista){
-    var aux *Lista
-    var i int
-    for aux = l; aux.proximo != nil; aux = aux.proximo{
-        fmt.Println(aux.imovel.nome)
-        i++
+func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo listaimpressa.txt
+  file, err := os.Create("listaimpressa.txt")
+    if err != nil {
+        return
     }
-    fmt.Println(i)
+    defer file.Close()
+    var aux *Lista
+    for aux = l; aux != nil; aux = aux.proximo{
+      file.WriteString(aux.imovel.nome)
+      file.WriteString(" - ")
+      file.WriteString(strconv.FormatFloat(float64(aux.imovel.imovel.defineTipoImovel()), 'f', 6, 64))
+      file.WriteString("\n")
+    }
 }
 
 func criaListaImoveisCaros(l *Lista, a *Lista, s Especificacao) *Lista{
@@ -74,27 +75,24 @@ func criaListaImoveisCaros(l *Lista, a *Lista, s Especificacao) *Lista{
   for aux := l; aux != nil; aux = aux.proximo{
     tam++
   }
-  tam--
-  aux := l
-  ordena := []float64 {}
-  for i := 0; i != tam; i++{
-    ordena = append(ordena,float64(aux.imovel.imovel.defineTipoImovel()))
-    aux = aux.proximo
-  }
-  sort.Float64s(ordena)
-  // porcimv = s.perimocaro*tam/100
-  for i:= tam-1; i != -1; i-- {
-    for aux := l; aux.proximo != nil; aux = aux.proximo{
-      if float64(aux.imovel.imovel.defineTipoImovel()) == ordena[i] {
-        a = insereLista(a, aux.imovel)
+  fmt.Println("aloalo")
+  var menor float32
+  var atual float32
+  var aux2 *Lista
+  var aux *Lista
+  for i:=0; i < tam; i++{
+    menor = 0.0
+    atual = 0.0
+    for aux = l; aux !=nil; aux = aux.proximo{
+      atual = aux.imovel.imovel.defineTipoImovel()
+      if menor < atual{
+        menor = atual
+        aux2 = aux
+        // fmt.Println(aux.imovel.nome)
       }
     }
+    a = insereLista(a, aux2.imovel)
+    l = removeLista(l, aux2.imovel.identificador)
   }
-  // var h int
-  // for i := 0; i < tam; i++{
-  //   h++
-  //   fmt.Printf("%f\n", ordena[i])
-  // }
-  // fmt.Println(h)
   return a
 }

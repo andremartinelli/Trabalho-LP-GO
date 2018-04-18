@@ -124,20 +124,18 @@ func (r *Residencia) defineTipoImovel() float32 {
 
 
 func main() {
-  fmt.Println("Programa feito por :Andre Martinelli")
+  fmt.Println("Programa feito por: Andre Martinelli")
     var l *Lista
     var a *Lista
     var spec Especificacao
-    l = inicializaVazia()
     // leitura do arquivo catalogo.txt
     l = lecatalogo(l)
     //leitura do arquivo de operaçoes a serem realizadas
     l = leoperacoes(l)
     //le as especificacoes
     spec = leespec(spec)
+    //cria lista ordenada com os imoveis mais caros
     a = criaListaImoveisCaros(l,a,spec)
-    imprimeLista(l)
-    fmt.Println("--------------------")
     imprimeLista(a)
 
 
