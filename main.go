@@ -129,4 +129,5 @@ func main() {
     //cria lista ordenada com os imoveis mais caros
     a = criaListaImoveisCaros(l,a,spec)
     imprimeLista(a)
+    
     }
