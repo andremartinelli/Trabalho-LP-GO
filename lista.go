@@ -4,8 +4,6 @@ import (
     "fmt"
     "os"
     "strconv"
-    // "io/ioutil"
-    // "sort"
 )
 
 type Lista struct{
@@ -87,7 +85,6 @@ func criaListaImoveisCaros(l *Lista, a *Lista, s Especificacao) *Lista{ //cria l
       if menor < atual{
         menor = atual
         aux2 = aux
-        // fmt.Println(aux.imovel.nome)
       }
     }
     a = insereLista(a, aux2.imovel)
