@@ -119,6 +119,7 @@ func main() {
   fmt.Println("Programa feito por: Andre Martinelli")
     var l *Lista
     var a *Lista
+    var b *Lista
     var spec Especificacao
     // leitura do arquivo catalogo.txt
     l = lecatalogo(l)
@@ -129,7 +130,7 @@ func main() {
     //cria lista ordenada com os imoveis mais caros
     a = criaListaImoveisCaros(l,a)
     //Lista dos imóveis mais caros em ordem crescente de preço, na quantidade especificada
-    a = pegaPorcLista(a, spec)
-    imprimeLista(a)
+    b = pegaPorcLista(a, spec)
+    imprimeLista(b)
 
     }

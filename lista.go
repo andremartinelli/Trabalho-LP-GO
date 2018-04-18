@@ -19,16 +19,15 @@ func insereLista(l *Lista,i Imovel) *Lista{ //insere um elemenento novo na lista
 }
 
 func insereListaUltimo(l *Lista, i Imovel) *Lista{ //insere um elemento na ultima posição da lista
-  var novo *Lista
+  var novo Lista
   var aux *Lista
   novo.imovel = i
   if l == nil {
-    return novo
+    return &novo
   }
-  for aux = l; aux != nil; aux = aux.proximo{
-    //do nothing
+  for aux = l; aux.proximo != nil; aux = aux.proximo{
   }
-  aux.proximo = novo
+    aux.proximo = &novo
   return l
 }
 
@@ -83,12 +82,18 @@ func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{ //cria lista organizada c
     atual = 0.0
     for aux = l; aux !=nil; aux = aux.proximo{
       atual = aux.imovel.imovel.defineTipoImovel()
+      if atual == menor{//caso seja igual
+        if aux.imovel.identificador < aux2.imovel.identificador{ //pega o com o menor identificador e seta como menor
+          menor = atual
+          aux2 = aux
+        }
+      }
       if menor < atual{
         menor = atual
         aux2 = aux
       }
     }
-    a = insereLista(a, aux2.imovel)
+    a = insereListaUltimo(a, aux2.imovel)
     l = removeLista(l, aux2.imovel.identificador)
   }
   return a
@@ -110,3 +115,8 @@ func pegaPorcLista(a *Lista, s Especificacao) *Lista{//retorna lista dos imóvei
   }
   return novalista
 }
+
+
+// func listaMenoresTerrenosArgilosos(a *Lista, s Especificacao) *Lista{
+//
+// }
