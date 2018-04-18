@@ -54,6 +54,7 @@ func removeLista(l *Lista, ident int) *Lista{ //remove um elemento da lista
 }
 
 func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo listaimpressa.txt
+  fmt.Println("Imprimindo (função imprimeLista)")
   file, err := os.Create("listaimpressa.txt")
     if err != nil {
         return
@@ -68,7 +69,7 @@ func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo lis
     }
 }
 
-func criaListaImoveisCaros(l *Lista, a *Lista, s Especificacao) *Lista{ //cria lista organizada com os imoveis mais caros em ordem crescente
+func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{ //cria lista organizada com os imoveis mais caros em ordem crescente
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
     tam++
@@ -91,4 +92,21 @@ func criaListaImoveisCaros(l *Lista, a *Lista, s Especificacao) *Lista{ //cria l
     l = removeLista(l, aux2.imovel.identificador)
   }
   return a
+}
+
+func pegaPorcLista(a *Lista, s Especificacao) *Lista{//retorna lista dos imóveis mais caros em ordem crescente de preço, na quantidade especificada em spec.txt
+  var por float32
+  var tam int
+  var novalista *Lista
+  for aux := a; aux != nil; aux = aux.proximo{
+    tam++
+  }
+  por = float32(s.perimocaro)*float32(tam)/100.0
+  b := int(por)
+  i := 0
+  for aux := a; i < b; aux = aux.proximo{
+    novalista = insereLista(novalista, aux.imovel)
+    i++
+  }
+  return novalista
 }

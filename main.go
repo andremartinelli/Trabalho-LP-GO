@@ -127,7 +127,9 @@ func main() {
     //le as especificacoes
     spec = leespec(spec)
     //cria lista ordenada com os imoveis mais caros
-    a = criaListaImoveisCaros(l,a,spec)
+    a = criaListaImoveisCaros(l,a)
+    //Lista dos imóveis mais caros em ordem crescente de preço, na quantidade especificada
+    a = pegaPorcLista(a, spec)
     imprimeLista(a)
-    
+
     }
