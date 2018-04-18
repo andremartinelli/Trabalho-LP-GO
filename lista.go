@@ -70,12 +70,11 @@ func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo lis
     }
 }
 
-func criaListaImoveisCaros(l *Lista, a *Lista, s Especificacao) *Lista{
+func criaListaImoveisCaros(l *Lista, a *Lista, s Especificacao) *Lista{ //cria lista organizada com os imoveis mais caros em ordem crescente
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
     tam++
   }
-  fmt.Println("aloalo")
   var menor float32
   var atual float32
   var aux2 *Lista

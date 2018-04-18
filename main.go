@@ -104,14 +104,6 @@ func (a *Apartamento)infoResidencia() float32{
     return a.aconstruida*(0.9 + (float32)(a.andar)/(float32)(a.totalandares))*a.alazer
 }
 
-// func (r *Residencia)valorTotalResidencia() float32{
-//     return r.preco*r.residencia.infoResidencia()
-// }
-//
-// func (t *Terreno)valorTotalTerreno() float32{
-//     return (float32)(t.preco)*t.terreno.areaTerreno()
-// }
-
 func (t *Terreno) defineTipoImovel() float32 {
     return (float32)(t.preco)*t.terreno.areaTerreno()*t.solo
   }
@@ -137,10 +129,4 @@ func main() {
     //cria lista ordenada com os imoveis mais caros
     a = criaListaImoveisCaros(l,a,spec)
     imprimeLista(a)
-
-
-
-
-
-
-}
+    }
