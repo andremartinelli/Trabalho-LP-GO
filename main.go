@@ -11,7 +11,9 @@ import (
 
 type tipoImovel interface{
     defineTipoImovel() float32
-    getArea() float32 //caso seja 0 é um terreno, caso seja 1 é uma residência
+    getAreaTerreno() float32 //caso seja 0 é um terreno, caso seja 1 é uma residência
+    getAreaCasa() float32
+    getNumeroQuartos() int
 }
 
 type tipoTerreno interface{
@@ -20,6 +22,7 @@ type tipoTerreno interface{
 
 type tipoResidencia interface{
     infoResidencia() float32
+    areaCasa() float32
 }
 
 
@@ -105,6 +108,14 @@ func (a *Apartamento)infoResidencia() float32{
     return a.aconstruida*(0.9 + (float32)(a.andar)/(float32)(a.totalandares))*a.alazer
 }
 
+func (c *Casa)areaCasa() float32{
+    return c.apavimento*(float32)(c.numpavimentos)
+}
+
+func (a *Apartamento)areaCasa() float32{
+    return 0 //retorna 0 pois não é casa
+}
+
 func (t *Terreno) defineTipoImovel() float32 {
     return (float32)(t.preco)*t.terreno.areaTerreno()*t.solo
   }
@@ -113,12 +124,28 @@ func (r *Residencia) defineTipoImovel() float32 {
   return r.preco*r.residencia.infoResidencia()
 }
 
-func (t *Terreno) getArea() float32 {
+func (t *Terreno) getAreaTerreno() float32 {
     return t.terreno.areaTerreno()
   }
 
-func (r *Residencia) getArea() float32 {
-  return 0
+func (r *Residencia) getAreaTerreno() float32 {
+  return 0 //retorna 0 pois não é terreno
+}
+
+func (t *Terreno) getAreaCasa() float32 {
+    return 0 //retorna - pois não é casa
+  }
+
+func (r *Residencia) getAreaCasa() float32 {
+  return r.residencia.areaCasa()
+}
+
+func (t *Terreno) getNumeroQuartos() int {
+    return 0 //retorna - pois não é residencia
+  }
+
+func (r *Residencia) getNumeroQuartos() int {
+  return r.quartos
 }
 
 
@@ -139,9 +166,12 @@ func main() {
     //cria lista ordenada com os imoveis mais caros
     a = criaListaImoveisCaros(l,a)
     l = copiaLista(c)
-    //Lista dos imóveis mais caros em ordem crescente de preço, na quantidade especificada
+    //Lista dos imóveis mais caros em ordem crescente de preço, respeitando a quantidade especificada
     a = pegaPorcListaCaros(a, spec)
+    //lista dos terrenos com menor área
     b = listaMenoresTerrenosArgilosos(l, b)
+    //lista dos terrenos com menor área, respeitando a quantidade especificada
+    b = pegaPorcListaMenores(b, spec)
     imprimeLista(b)
 
     }

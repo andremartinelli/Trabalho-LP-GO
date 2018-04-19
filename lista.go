@@ -125,10 +125,10 @@ func pegaPorcListaCaros(a *Lista, s Especificacao) *Lista{//retorna lista dos im
 }
 
 
-func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{
+func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{//retorn lista com menores terrenos
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
-    if aux.imovel.imovel.getArea() != 0{tam++}
+    if aux.imovel.imovel.getAreaTerreno() != 0{tam++}
   }
   var menor float32
   var atual float32
@@ -138,8 +138,59 @@ func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{
     menor = 0.0
     atual = 0.0
     for aux = l; aux !=nil; aux = aux.proximo{
-      if aux.imovel.imovel.getArea() != 0{
-        atual = aux.imovel.imovel.getArea()
+      if aux.imovel.imovel.getAreaTerreno() != 0{
+        atual = aux.imovel.imovel.getAreaTerreno()
+        if atual == menor{//caso seja igual
+          if aux.imovel.identificador < aux2.imovel.identificador{ //pega o com o menor identificador e seta como menor
+            menor = atual
+            aux2 = aux
+          }
+        }
+        if menor < atual{
+          menor = atual
+          aux2 = aux
+        }
+      }
+    }
+    a = insereLista(a, aux2.imovel)
+    l = removeLista(l, aux2.imovel.identificador)
+  }
+  return a
+}
+
+func pegaPorcListaMenores(a *Lista, s Especificacao) *Lista{
+  var por float32
+  var tam int
+  var novalista *Lista
+  for aux := a; aux != nil; aux = aux.proximo{
+    tam++
+  }
+  por = float32(s.permenarg)*float32(tam)/100.0
+  b := int(por)
+  i := 0
+  for aux := a; i < b; aux = aux.proximo{
+    novalista = insereLista(novalista, aux.imovel)
+    i++
+  }
+  return novalista
+}
+
+
+func listaAreaCasa(l *Lista, a *Lista, s Especificacao) *Lista{
+  var tam int
+  for aux := l; aux != nil; aux = aux.proximo{
+    if aux.imovel.imovel.getAreaCasa() != 0{tam++}
+  }
+  var menor int
+  var atual int
+  var aux2 *Lista
+  var aux *Lista
+  for i:=0; i < tam; i++{
+    menor = 0
+    atual = 0
+    for aux = l; aux !=nil; aux = aux.proximo{
+      if aux.imovel.imovel.getAreaCasa() > s.alimite && aux.imovel.imovel.defineTipoImovel() < s.precolimite{
+        atual = aux.imovel.imovel.getNumeroQuartos()
         if atual == menor{//caso seja igual
           if aux.imovel.identificador < aux2.imovel.identificador{ //pega o com o menor identificador e seta como menor
             menor = atual
