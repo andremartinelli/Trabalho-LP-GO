@@ -1,7 +1,3 @@
-Enzo Salviato Mameri - 495362.031250
-Lucas Fraga Lopes - 623708.312500
-Thais Nobre De Morais - 843806.000000
-Paulo Vitor Vieria Oliveira - 1036738.312500
 Luisa Moitinho Santanna - 1113212.250000
 Amanda Loyola Goulart - 1898182.750000
 Victor Lira De Queiroz Vieira - 1915633.625000
@@ -49,3 +45,7 @@ Clara Pacheco Santos - 4611120128.000000
 Pedro Victor Campos Doelinger - 5999401984.000000
 Larissa Guerra Dornelas - 6085010432.000000
 Rebecca Pezzodipane Cobe - 6889205760.000000
+Gabriella Xavier Lindenberg Von Schilgen - 8027891200.000000
+Nicolle Louzada Capucho - 11980191744.000000
+Sergio Augusto Furtado De Mello - 17540909056.000000
+Gustavo Soares Martins - 33349677056.000000

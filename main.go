@@ -92,6 +92,10 @@ func (t *Trapezoidal)areaTerreno() float32{
     return t.altura*(t.base1+t.base2)/2
 }
 
+func (t *Terreno) defineTipoImovel() float32 {
+  return (float32)(t.preco)*t.terreno.areaTerreno()*t.solo
+}
+
 func (t *Triangular)areaTerreno() float32{
     return t.base*t.altura
 }
@@ -100,28 +104,24 @@ func (r *Retangular)areaTerreno() float32{
     return r.lado1*r.lado2
 }
 
-func (c *Casa)infoResidencia() float32{
-    return c.apavimento*(float32)(c.numpavimentos)+(float32)(c.palivre)*c.alivre
-}
-
-func (a *Apartamento)infoResidencia() float32{
-    return a.aconstruida*(0.9 + (float32)(a.andar)/(float32)(a.totalandares))*a.alazer
-}
-
 func (c *Casa)areaCasa() float32{
-    return c.apavimento*(float32)(c.numpavimentos)
+    return c.apavimento*(float32)(c.numpavimentos)+(float32)(c.palivre)
 }
 
 func (a *Apartamento)areaCasa() float32{
     return 0 //retorna 0 pois não é casa
 }
 
-func (t *Terreno) defineTipoImovel() float32 {
-    return (float32)(t.preco)*t.terreno.areaTerreno()*t.solo
-  }
-
 func (r *Residencia) defineTipoImovel() float32 {
   return r.preco*r.residencia.infoResidencia()
+}
+
+func (c *Casa)infoResidencia() float32{
+  return c.apavimento*(float32)(c.numpavimentos)+(float32)(c.palivre)*c.alivre
+}
+
+func (a *Apartamento)infoResidencia() float32{
+  return a.aconstruida*(0.9 + (float32)(a.andar)/(float32)(a.totalandares))*a.alazer
 }
 
 func (t *Terreno) getAreaTerreno() float32 {
@@ -152,9 +152,10 @@ func (r *Residencia) getNumeroQuartos() int {
 func main() {
   fmt.Println("Programa feito por: Andre Martinelli")
     var l *Lista
-    var c *Lista
+    var copia *Lista
     var a *Lista
     var b *Lista
+    var c *Lista
     var spec Especificacao
     // leitura do arquivo catalogo.txt
     l = lecatalogo(l)
@@ -162,16 +163,19 @@ func main() {
     l = leoperacoes(l)
     //le as especificacoes
     spec = leespec(spec)
-    c = copiaLista(l)
+    copia = copiaLista(l)
     //cria lista ordenada com os imoveis mais caros
     a = criaListaImoveisCaros(l,a)
-    l = copiaLista(c)
+    l = copiaLista(copia)
     //Lista dos imóveis mais caros em ordem crescente de preço, respeitando a quantidade especificada
     a = pegaPorcListaCaros(a, spec)
+    imprimeLista(a)
     //lista dos terrenos com menor área
     b = listaMenoresTerrenosArgilosos(l, b)
     //lista dos terrenos com menor área, respeitando a quantidade especificada
     b = pegaPorcListaMenores(b, spec)
-    imprimeLista(b)
-
+    l = copiaLista(copia)
+    c = listaAreaCasa(l,c,spec)
+    result(a,b,c,spec)
+    saida(a,b,c,spec)
     }

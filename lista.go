@@ -101,7 +101,7 @@ func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{ //cria lista organizada c
         aux2 = aux
       }
     }
-    a = insereListaUltimo(a, aux2.imovel)
+    a = insereLista(a, aux2.imovel)
     l = removeLista(l, aux2.imovel.identificador)
   }
   return a
@@ -118,7 +118,7 @@ func pegaPorcListaCaros(a *Lista, s Especificacao) *Lista{//retorna lista dos im
   b := int(por)
   i := 0
   for aux := a; i < b; aux = aux.proximo{
-    novalista = insereLista(novalista, aux.imovel)
+    novalista = insereListaUltimo(novalista, aux.imovel)
     i++
   }
   return novalista
@@ -179,7 +179,7 @@ func pegaPorcListaMenores(a *Lista, s Especificacao) *Lista{
 func listaAreaCasa(l *Lista, a *Lista, s Especificacao) *Lista{
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
-    if aux.imovel.imovel.getAreaCasa() != 0{tam++}
+    if aux.imovel.imovel.getAreaCasa() > s.alimite && aux.imovel.imovel.defineTipoImovel() < s.precolimite{tam++}
   }
   var menor int
   var atual int
