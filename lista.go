@@ -68,6 +68,14 @@ func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo lis
     }
 }
 
+func copiaLista(l *Lista) *Lista{
+  var a *Lista
+  for aux:=l; aux != nil; aux = aux.proximo{
+    a = insereLista(a, aux.imovel)
+  }
+  return a
+}
+
 func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{ //cria lista organizada com os imoveis mais caros em ordem crescente
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
@@ -99,7 +107,7 @@ func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{ //cria lista organizada c
   return a
 }
 
-func pegaPorcLista(a *Lista, s Especificacao) *Lista{//retorna lista dos imóveis mais caros em ordem crescente de preço, na quantidade especificada em spec.txt
+func pegaPorcListaCaros(a *Lista, s Especificacao) *Lista{//retorna lista dos imóveis mais caros em ordem crescente de preço, na quantidade especificada em spec.txt
   var por float32
   var tam int
   var novalista *Lista
@@ -117,6 +125,35 @@ func pegaPorcLista(a *Lista, s Especificacao) *Lista{//retorna lista dos imóvei
 }
 
 
-// func listaMenoresTerrenosArgilosos(a *Lista, s Especificacao) *Lista{
-//
-// }
+func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{
+  var tam int
+  for aux := l; aux != nil; aux = aux.proximo{
+    if aux.imovel.imovel.getArea() != 0{tam++}
+  }
+  var menor float32
+  var atual float32
+  var aux2 *Lista
+  var aux *Lista
+  for i:=0; i < tam; i++{
+    menor = 0.0
+    atual = 0.0
+    for aux = l; aux !=nil; aux = aux.proximo{
+      if aux.imovel.imovel.getArea() != 0{
+        atual = aux.imovel.imovel.getArea()
+        if atual == menor{//caso seja igual
+          if aux.imovel.identificador < aux2.imovel.identificador{ //pega o com o menor identificador e seta como menor
+            menor = atual
+            aux2 = aux
+          }
+        }
+        if menor < atual{
+          menor = atual
+          aux2 = aux
+        }
+      }
+    }
+    a = insereLista(a, aux2.imovel)
+    l = removeLista(l, aux2.imovel.identificador)
+  }
+  return a
+}

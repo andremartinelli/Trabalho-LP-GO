@@ -11,6 +11,7 @@ import (
 
 type tipoImovel interface{
     defineTipoImovel() float32
+    getArea() float32 //caso seja 0 é um terreno, caso seja 1 é uma residência
 }
 
 type tipoTerreno interface{
@@ -112,12 +113,19 @@ func (r *Residencia) defineTipoImovel() float32 {
   return r.preco*r.residencia.infoResidencia()
 }
 
+func (t *Terreno) getArea() float32 {
+    return t.terreno.areaTerreno()
+  }
 
+func (r *Residencia) getArea() float32 {
+  return 0
+}
 
 
 func main() {
   fmt.Println("Programa feito por: Andre Martinelli")
     var l *Lista
+    var c *Lista
     var a *Lista
     var b *Lista
     var spec Especificacao
@@ -127,10 +135,13 @@ func main() {
     l = leoperacoes(l)
     //le as especificacoes
     spec = leespec(spec)
+    c = copiaLista(l)
     //cria lista ordenada com os imoveis mais caros
     a = criaListaImoveisCaros(l,a)
+    l = copiaLista(c)
     //Lista dos imóveis mais caros em ordem crescente de preço, na quantidade especificada
-    b = pegaPorcLista(a, spec)
+    a = pegaPorcListaCaros(a, spec)
+    b = listaMenoresTerrenosArgilosos(l, b)
     imprimeLista(b)
 
     }
