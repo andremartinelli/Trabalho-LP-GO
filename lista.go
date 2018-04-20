@@ -126,7 +126,6 @@ func pegaPorcListaCaros(a *Lista, s Especificacao) *Lista{//retorna lista dos im
   return novalista
 }
 
-
 func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{//retorn lista com menores terrenos
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
