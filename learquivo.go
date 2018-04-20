@@ -3,14 +3,13 @@ package main
 
 import (
     "bufio"
-    "fmt"
     "log"
     "os"
     "strings"
     "strconv"
 )
 
-func lecatalogo(l *Lista) *Lista{
+func lecatalogo(l *Lista) *Lista{//lê o arquivo catalogo.txt e salva suas informações
   var floataux float64
   file, err := os.Open("catalogo.txt")
       if err != nil {
@@ -18,7 +17,6 @@ func lecatalogo(l *Lista) *Lista{
       }
       defer file.Close()
       scanner := bufio.NewScanner(file)
-      fmt.Println("Abriu arquivo")
       for scanner.Scan() {
           if scanner.Text() != "" {
               switch strings.ToLower(scanner.Text()) {
@@ -167,7 +165,7 @@ func lecatalogo(l *Lista) *Lista{
 }
 
 
-func leoperacoes(l *Lista) *Lista{
+func leoperacoes(l *Lista) *Lista{//lê o arquivo atual.txt e salva informações
   var floataux float64
           file, err := os.Open("atual.txt")
               if err != nil {
@@ -480,7 +478,7 @@ func leoperacoes(l *Lista) *Lista{
               return l
 }
 
-func leespec(s Especificacao) Especificacao{
+func leespec(s Especificacao) Especificacao{//lê o arquivo espec.txt e salva informações
   var floataux float64
   file, err := os.Open("espec.txt")
       if err != nil {

@@ -1,12 +1,11 @@
 package main
 
 import (
-  // "fmt"
       "os"
       "strconv"
 )
 
-func result(a *Lista, b *Lista, c *Lista, s Especificacao){
+func result(a *Lista, b *Lista, c *Lista, s Especificacao){//gera o arquivo result.txt
   file, err := os.Create("result.txt")
     if err != nil {
         return
@@ -38,7 +37,7 @@ func result(a *Lista, b *Lista, c *Lista, s Especificacao){
   file.WriteString(strconv.FormatInt(int64(total), 10))
 }
 
-func saida(a *Lista, b *Lista, c *Lista, s Especificacao){
+func saida(a *Lista, b *Lista, c *Lista, s Especificacao){//gera o arquivo saida.txt
   file, err := os.Create("saida.txt")
     if err != nil {
         return
@@ -71,6 +70,5 @@ func saida(a *Lista, b *Lista, c *Lista, s Especificacao){
     }
     file.WriteString(strconv.FormatInt(int64(aux.imovel.identificador), 10))
     file.WriteString(", ")
-
   }
 }

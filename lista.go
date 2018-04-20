@@ -1,7 +1,6 @@
 package main
 
 import (
-    "fmt"
     "os"
     "strconv"
 )
@@ -52,8 +51,7 @@ func removeLista(l *Lista, ident int) *Lista{ //remove um elemento da lista
   return l
 }
 
-func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo listaimpressa.txt
-  fmt.Println("Imprimindo (função imprimeLista)")
+func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo listaimpressa.txt (função para teste)
   file, err := os.Create("listaimpressa.txt")
     if err != nil {
         return
@@ -70,7 +68,7 @@ func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo lis
     }
 }
 
-func copiaLista(l *Lista) *Lista{
+func copiaLista(l *Lista) *Lista{//copia a lista, utilizada para salvar a lista original
   var a *Lista
   for aux:=l; aux != nil; aux = aux.proximo{
     a = insereLista(a, aux.imovel)
@@ -78,7 +76,7 @@ func copiaLista(l *Lista) *Lista{
   return a
 }
 
-func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{ //cria lista organizada com os imoveis mais caros em ordem crescente
+func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{//cria lista organizada com os imoveis mais caros em ordem crescente
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
     tam++
@@ -159,7 +157,7 @@ func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{//retorn lista com
   return a
 }
 
-func pegaPorcListaMenores(a *Lista, s Especificacao) *Lista{
+func pegaPorcListaMenores(a *Lista, s Especificacao) *Lista{//retorna lista do item b
   var por float32
   var tam int
   var novalista *Lista
@@ -176,8 +174,7 @@ func pegaPorcListaMenores(a *Lista, s Especificacao) *Lista{
   return novalista
 }
 
-
-func listaAreaCasa(l *Lista, a *Lista, s Especificacao) *Lista{
+func listaAreaCasa(l *Lista, a *Lista, s Especificacao) *Lista{//retorna lista do item c
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
     if aux.imovel.imovel.getAreaCasa() > s.alimite && aux.imovel.imovel.defineTipoImovel() < s.precolimite{tam++}

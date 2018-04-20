@@ -1,20 +1,12 @@
 package main
 
-import (
-    // "bufio"
-    "fmt"
-    // "log"
-    // "os"
-    // "strings"
-    // "strconv"
-)
 
 type tipoImovel interface{
-    defineTipoImovel() float32
+    defineTipoImovel() float32 //calcula o preço do imovel
     getAreaTerreno() float32 //caso seja 0 é um terreno, caso seja 1 é uma residência
-    getAreaCasa() float32
-    getNumeroQuartos() int
-    getTipoTerreno() float32
+    getAreaCasa() float32 //retorna area da casa, caso imovel não seja casa retorna 0
+    getNumeroQuartos() int //retorna numero de quartos
+    getTipoTerreno() float32 //retorna o tipo do terreno de acordo com seu fator multiplicativo
 }
 
 type tipoTerreno interface{
@@ -28,13 +20,13 @@ type tipoResidencia interface{
 }
 
 
-type Imovel struct{
+type Imovel struct{//Terreno e Residencia são tipoImovel
     nome string
     identificador int
     imovel tipoImovel
 }
 
-type Terreno struct{
+type Terreno struct{//Retangular, Triangular, e Trapezoidal são terrenos tipoTerreno
     preco int //preco m^2 terreno
     solo float32
     terreno tipoTerreno
@@ -59,9 +51,9 @@ type Trapezoidal struct{
     altura float32
 }
 
-type Residencia struct{
+type Residencia struct{//Casa e Apartamento são tipoResidencia
     quartos int
-    preco float32
+    preco float32 //preco m^2 residencia
     vagas int
     residencia tipoResidencia
 }
@@ -167,32 +159,35 @@ func (t *Terreno) getTipoTerreno() float32 {
 }
 
 func main() {
-  fmt.Println("Programa feito por: Andre Martinelli")
     var l *Lista
     var copia *Lista
     var a *Lista
     var b *Lista
     var c *Lista
     var spec Especificacao
-    // leitura do arquivo catalogo.txt
-    l = lecatalogo(l)
-    //leitura do arquivo de operaçoes a serem realizadas
-    l = leoperacoes(l)
-    //le as especificacoes
-    spec = leespec(spec)
-    copia = copiaLista(l)
-    //cria lista ordenada com os imoveis mais caros
-    a = criaListaImoveisCaros(l,a)
-    l = copiaLista(copia)
-    //Lista dos imóveis mais caros em ordem crescente de preço, respeitando a quantidade especificada
-    a = pegaPorcListaCaros(a, spec)
-    //lista dos terrenos com menor área
-    b = listaMenoresTerrenosArgilosos(l, b)
-    //lista dos terrenos com menor área, respeitando a quantidade especificada
-    b = pegaPorcListaMenores(b, spec)
-    l = copiaLista(copia)
-    c = listaAreaCasa(l,c,spec)
-    imprimeLista(b)
-    result(a,b,c,spec)
-    saida(a,b,c,spec)
+    l = lecatalogo(l)// leitura do arquivo catalogo.txt
+
+    l = leoperacoes(l)//leitura do arquivo de operaçoes a serem realizadas
+
+    spec = leespec(spec)//le as especificacoes
+
+    copia = copiaLista(l)//copia lista original
+
+    a = criaListaImoveisCaros(l,a)//cria lista ordenada com os imoveis mais caros
+
+    l = copiaLista(copia)//copia lista original
+
+    a = pegaPorcListaCaros(a, spec)//Lista dos imóveis mais caros em ordem crescente de preço, respeitando a quantidade especificada
+
+    b = listaMenoresTerrenosArgilosos(l, b)//lista dos terrenos com menor área
+
+    b = pegaPorcListaMenores(b, spec)//lista dos terrenos com menor área, respeitando a quantidade especificada
+
+    l = copiaLista(copia)//copia lista original
+
+    c = listaAreaCasa(l,c,spec)//lista do item c
+
+    result(a,b,c,spec)//imprime em arquivo result.txt o resultado
+
+    saida(a,b,c,spec)//imprime a saída em arquivo saida.txt
     }
