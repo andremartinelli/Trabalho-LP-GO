@@ -34,17 +34,24 @@ func result(a *Lista, b *Lista, c *Lista, s Especificacao){
 
 func saida(a *Lista, b *Lista, c *Lista, s Especificacao){
   for aux:=a;aux != nil; aux = aux.proximo{
+    if aux.proximo == nil{
+        fmt.Printf("%d\n",aux.imovel.identificador)
+        break
+    }
     fmt.Printf("%d, ",aux.imovel.identificador)
   }
-  fmt.Println("")
-  fmt.Println("Lista b")
   for aux:=b;aux != nil; aux = aux.proximo{
+    if aux.proximo == nil{
+        fmt.Printf("%d\n",aux.imovel.identificador)
+        break
+    }
     fmt.Printf("%d, ",aux.imovel.identificador)
   }
-
-  fmt.Println("")
-  fmt.Println("Lista c")
   for aux:=c;aux != nil; aux = aux.proximo{
+    if aux.proximo == nil{
+        fmt.Printf("%d",aux.imovel.identificador)
+        break
+    }
     fmt.Printf("%d, ",aux.imovel.identificador)
   }
 }

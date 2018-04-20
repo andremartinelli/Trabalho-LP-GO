@@ -192,7 +192,7 @@ func main() {
     b = pegaPorcListaMenores(b, spec)
     l = copiaLista(copia)
     c = listaAreaCasa(l,c,spec)
-    imprimeLista(a)
+    imprimeLista(b)
     result(a,b,c,spec)
     saida(a,b,c,spec)
     }

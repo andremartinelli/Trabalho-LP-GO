@@ -194,7 +194,7 @@ func listaAreaCasa(l *Lista, a *Lista, s Especificacao) *Lista{
       if aux.imovel.imovel.getAreaCasa() > s.alimite && aux.imovel.imovel.defineTipoImovel() < s.precolimite{
         atual = aux.imovel.imovel.getNumeroQuartos()
         if atual == menor{//caso seja igual
-          if aux.imovel.identificador < aux2.imovel.identificador{ //pega o com o menor identificador e seta como menor
+          if aux.imovel.identificador > aux2.imovel.identificador{ //pega o com o menor identificador e seta como menor
             menor = atual
             aux2 = aux
           }
@@ -205,7 +205,7 @@ func listaAreaCasa(l *Lista, a *Lista, s Especificacao) *Lista{
         }
       }
     }
-    a = insereLista(a, aux2.imovel)
+    a = insereListaUltimo(a, aux2.imovel)
     l = removeLista(l, aux2.imovel.identificador)
   }
   return a
