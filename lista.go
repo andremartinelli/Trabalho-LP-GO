@@ -61,6 +61,8 @@ func imprimeLista(l *Lista){ //imprime os elementos de uma lista num arquivo lis
     defer file.Close()
     var aux *Lista
     for aux = l; aux != nil; aux = aux.proximo{
+      file.WriteString(strconv.FormatInt(int64(aux.imovel.identificador), 10))
+      file.WriteString(" - ")
       file.WriteString(aux.imovel.nome)
       file.WriteString(" - ")
       file.WriteString(strconv.FormatFloat(float64(aux.imovel.imovel.defineTipoImovel()), 'f', 6, 64))
@@ -101,7 +103,7 @@ func criaListaImoveisCaros(l *Lista, a *Lista) *Lista{ //cria lista organizada c
         aux2 = aux
       }
     }
-    a = insereLista(a, aux2.imovel)
+    a = insereListaUltimo(a, aux2.imovel)
     l = removeLista(l, aux2.imovel.identificador)
   }
   return a
@@ -118,7 +120,7 @@ func pegaPorcListaCaros(a *Lista, s Especificacao) *Lista{//retorna lista dos im
   b := int(por)
   i := 0
   for aux := a; i < b; aux = aux.proximo{
-    novalista = insereListaUltimo(novalista, aux.imovel)
+    novalista = insereLista(novalista, aux.imovel)
     i++
   }
   return novalista
@@ -141,7 +143,7 @@ func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{//retorn lista com
       if aux.imovel.imovel.getAreaTerreno() != 0{
         atual = aux.imovel.imovel.getAreaTerreno()
         if atual == menor{//caso seja igual
-          if aux.imovel.identificador < aux2.imovel.identificador{ //pega o com o menor identificador e seta como menor
+          if aux.imovel.identificador < aux2.imovel.identificador{//pega o com o menor identificador e seta como menor
             menor = atual
             aux2 = aux
           }

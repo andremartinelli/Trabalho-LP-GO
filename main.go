@@ -22,6 +22,7 @@ type tipoTerreno interface{
 
 type tipoResidencia interface{
     infoResidencia() float32
+    infoResidenciaCasa() float32
     areaCasa() float32
 }
 
@@ -88,16 +89,16 @@ type Especificacao struct{
   vk int
 }
 
-func (t *Trapezoidal)areaTerreno() float32{
-    return t.altura*(t.base1+t.base2)/2
-}
-
 func (t *Terreno) defineTipoImovel() float32 {
   return (float32)(t.preco)*t.terreno.areaTerreno()*t.solo
 }
 
+func (t *Trapezoidal)areaTerreno() float32{
+    return t.altura*((t.base1+t.base2)/2.0)
+}
+
 func (t *Triangular)areaTerreno() float32{
-    return t.base*t.altura
+    return (t.base*t.altura)/2.0
 }
 
 func (r *Retangular)areaTerreno() float32{
@@ -105,7 +106,7 @@ func (r *Retangular)areaTerreno() float32{
 }
 
 func (c *Casa)areaCasa() float32{
-    return c.apavimento*(float32)(c.numpavimentos)+(float32)(c.palivre)
+    return c.apavimento*(float32)(c.numpavimentos)
 }
 
 func (a *Apartamento)areaCasa() float32{
@@ -113,15 +114,23 @@ func (a *Apartamento)areaCasa() float32{
 }
 
 func (r *Residencia) defineTipoImovel() float32 {
-  return r.preco*r.residencia.infoResidencia()
+  return r.preco*r.residencia.infoResidencia() + r.residencia.infoResidenciaCasa()
 }
 
 func (c *Casa)infoResidencia() float32{
-  return c.apavimento*(float32)(c.numpavimentos)+(float32)(c.palivre)*c.alivre
+  return c.apavimento*(float32)(c.numpavimentos)
 }
 
 func (a *Apartamento)infoResidencia() float32{
   return a.aconstruida*(0.9 + (float32)(a.andar)/(float32)(a.totalandares))*a.alazer
+}
+
+func (a *Apartamento)infoResidenciaCasa() float32{
+  return 0.0
+}
+
+func (c *Casa)infoResidenciaCasa() float32{
+  return (float32)(c.palivre)*c.alivre
 }
 
 func (t *Terreno) getAreaTerreno() float32 {
@@ -169,13 +178,13 @@ func main() {
     l = copiaLista(copia)
     //Lista dos imóveis mais caros em ordem crescente de preço, respeitando a quantidade especificada
     a = pegaPorcListaCaros(a, spec)
-    imprimeLista(a)
     //lista dos terrenos com menor área
     b = listaMenoresTerrenosArgilosos(l, b)
     //lista dos terrenos com menor área, respeitando a quantidade especificada
     b = pegaPorcListaMenores(b, spec)
     l = copiaLista(copia)
     c = listaAreaCasa(l,c,spec)
+    imprimeLista(a)
     result(a,b,c,spec)
     saida(a,b,c,spec)
     }
