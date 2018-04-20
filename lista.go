@@ -130,7 +130,7 @@ func pegaPorcListaCaros(a *Lista, s Especificacao) *Lista{//retorna lista dos im
 func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{//retorn lista com menores terrenos
   var tam int
   for aux := l; aux != nil; aux = aux.proximo{
-    if aux.imovel.imovel.getAreaTerreno() != 0{tam++}
+    if aux.imovel.imovel.getAreaTerreno() != 0 && aux.imovel.imovel.getTipoTerreno() == 1.3{tam++}
   }
   var menor float32
   var atual float32
@@ -140,7 +140,7 @@ func listaMenoresTerrenosArgilosos(l *Lista, a *Lista) *Lista{//retorn lista com
     menor = 0.0
     atual = 0.0
     for aux = l; aux !=nil; aux = aux.proximo{
-      if aux.imovel.imovel.getAreaTerreno() != 0{
+      if aux.imovel.imovel.getAreaTerreno() != 0 && aux.imovel.imovel.getTipoTerreno() == 1.3{
         atual = aux.imovel.imovel.getAreaTerreno()
         if atual == menor{//caso seja igual
           if aux.imovel.identificador < aux2.imovel.identificador{//pega o com o menor identificador e seta como menor

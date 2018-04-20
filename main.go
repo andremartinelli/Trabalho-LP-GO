@@ -14,6 +14,7 @@ type tipoImovel interface{
     getAreaTerreno() float32 //caso seja 0 é um terreno, caso seja 1 é uma residência
     getAreaCasa() float32
     getNumeroQuartos() int
+    getTipoTerreno() float32
 }
 
 type tipoTerreno interface{
@@ -157,6 +158,13 @@ func (r *Residencia) getNumeroQuartos() int {
   return r.quartos
 }
 
+func (r *Residencia) getTipoTerreno() float32 {
+    return 0 //não é um terreno
+  }
+
+func (t *Terreno) getTipoTerreno() float32 {
+  return t.solo
+}
 
 func main() {
   fmt.Println("Programa feito por: Andre Martinelli")
